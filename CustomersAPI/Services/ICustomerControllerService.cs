@@ -1,5 +1,5 @@
 ﻿using CustomersAPI.Errors;
-using CustomersBLL.Models;
+using CustomersAPI.Models;
 using OneOf;
 using System;
 using System.Collections.Generic;

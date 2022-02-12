@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomersBLL.Models
+namespace CustomersAPI.Models
 {
     public record CustomerModel
     {

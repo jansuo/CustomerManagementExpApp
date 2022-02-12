@@ -5,7 +5,7 @@ using CustomersDAL.Models;
 using CustomersAPI.ControllerServices;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using CustomersBLL.Models;
+using CustomersAPI.Models;
 
 namespace CustomersAPI.Controllers
 {

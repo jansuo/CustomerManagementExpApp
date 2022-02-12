@@ -1,4 +1,4 @@
-﻿using CustomersBLL.Models;
+﻿using CustomersAPI.Models;
 using FluentValidation;
 namespace CustomersAPI.Validators
 {
@@ -7,7 +7,6 @@ namespace CustomersAPI.Validators
         public CustomerValidator()
         {
             RuleFor(model => model.Email)
-                .NotEmpty()
                 .EmailAddress()
                 .WithMessage("Invalid email address");
             RuleFor(model => model.FirstName)

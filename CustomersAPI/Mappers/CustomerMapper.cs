@@ -1,4 +1,4 @@
-﻿using CustomersBLL.Models;
+﻿using CustomersAPI.Models;
 using CustomersDAL.Models;
 
 namespace CustomersAPI.Mappers

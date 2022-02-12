@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CustomersDAL.Results
 {
-    public record CreateCustomerResult
+    public struct CreateCustomerResult
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using CustomersAPI.Mappers;
-using CustomersBLL.Models;
+using CustomersAPI.Models;
 using CustomersDAL.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;

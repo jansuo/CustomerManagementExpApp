@@ -5,7 +5,7 @@ namespace CustomersAPI.Mappers
 {
     public static class CustomerMapper
     {
-        public static CustomerModel DtoToModel(this Customer customer)
+        public static CustomerModel ToModel(this Customer customer)
         {
             return new()
             {
@@ -17,7 +17,7 @@ namespace CustomersAPI.Mappers
             };
         }
 
-        public static Customer ModelToDto(this CustomerModel model)
+        public static Customer ToDto(this CustomerModel model)
         {
             return new()
             {

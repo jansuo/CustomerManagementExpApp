@@ -28,7 +28,7 @@ namespace CustomersAPI.ControllerServices
         public async Task<IReadOnlyList<CustomerModel>> GetCustomers()
         {
             var dbResult = await _customerService.GetAll();
-            var result = dbResult.Select(x => x.DtoToModel()).ToList();
+            var result = dbResult.Select(x => x.ToModel()).ToList();
             return result;
         }
 
@@ -44,7 +44,7 @@ namespace CustomersAPI.ControllerServices
                 };
             }
             
-            var result = await _customerService.CreateCustomer(customer.ModelToDto());
+            var result = await _customerService.CreateCustomer(customer.ToDto());
             return result.Id;
         }
     }

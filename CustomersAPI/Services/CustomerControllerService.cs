@@ -8,6 +8,7 @@ using OneOf;
 using FluentValidation;
 using CustomersAPI.Errors;
 using System;
+using FluentValidation.Results;
 
 namespace CustomersAPI.ControllerServices
 {
@@ -32,20 +33,38 @@ namespace CustomersAPI.ControllerServices
             return result;
         }
 
-        public async Task<OneOf<Guid, CustomerValidationError>> CreateCustomer(CustomerModel customer)
+        public async Task<UpdateCustomerResponse> UpdateCustomer(CustomerModel customer)
         {
             var validateResult = _validator.Validate(customer);
             if (!validateResult.IsValid)
             {
                 var errorMessages = validateResult.Errors.Select(x => x.ErrorMessage).ToList();
-                return new CustomerValidationError
+                return new UpdateCustomerResponse
                 {
-                    Messages = errorMessages
+                    ValidationError = new CustomerValidationError
+                    {
+                        Messages = errorMessages
+                    }
                 };
             }
-            
-            var result = await _customerService.CreateCustomer(customer.ToDto());
-            return result.Id;
+
+            var updateResult = new UpdateCustomerResponse();
+            if (customer.Id == Guid.Empty)
+            {
+                var dbResult = await _customerService.CreateCustomer(customer.ToDto());
+                updateResult.Id = dbResult.Id;
+            }
+            else
+            {
+                updateResult.Id = customer.Id;
+                await _customerService.UpdateCustomer(customer.ToDto());
+            }
+            return updateResult;
+        }
+
+        public async Task DeleteCustomer(Guid Id)
+        {
+            await _customerService.DeleteCustomer(Id);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace CustomersAPI.ControllerServices
     public interface ICustomerControllerService
     {
         Task<IReadOnlyList<CustomerModel>> GetCustomers();
-        Task<OneOf<Guid, CustomerValidationError>> CreateCustomer(CustomerModel customer);
+        Task<UpdateCustomerResponse> UpdateCustomer(CustomerModel customer);
+        Task DeleteCustomer(Guid Id);
     }
 }

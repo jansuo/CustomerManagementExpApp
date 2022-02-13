@@ -21,14 +21,17 @@ namespace CustomersDAL.Services
             _configuration = configuration;
         }
 
-        private string GetConnectionString()
-        {
-            return _configuration["ConnectionStrings:Default"];
+        private string ConnectionString 
+        { 
+            get 
+            { 
+                return _configuration["ConnectionStrings:Default"];
+            } 
         }
 
         public async Task<IReadOnlyList<Customer>> GetAll()
         {
-            using (IDbConnection conn = new SqlConnection(GetConnectionString()))
+            using (IDbConnection conn = new SqlConnection(ConnectionString))
             {
                 var queryResult = await conn.QueryAsync<Customer>("SELECT * FROM Customers");
                 return queryResult.ToList();
@@ -37,7 +40,7 @@ namespace CustomersDAL.Services
 
         public async Task<CreateCustomerResult> CreateCustomer(Customer customer)
         { 
-            using (IDbConnection conn = new SqlConnection(GetConnectionString()))
+            using (IDbConnection conn = new SqlConnection(ConnectionString))
             {
                 var guid = await conn.QueryFirstAsync<Guid>(@"INSERT INTO Customers 
                     (Company, FirstName, LastName, Email, Mobile) OUTPUT INSERTED.Id
@@ -46,6 +49,28 @@ namespace CustomersDAL.Services
                 {
                     Id = guid
                 };
+            }
+        }
+
+        public async Task UpdateCustomer(Customer customer)
+        {
+            using (IDbConnection conn = new SqlConnection(ConnectionString))
+            {
+                var guid = await conn.QueryFirstAsync<Guid>(@"UPDATE Customers 
+                    SET Company=@Company, 
+                    FirstName=@FirstName, 
+                    LastName=@LastName, 
+                    Email=@Email, 
+                    Mobile=@Mobile
+                    WHERE Id=@Id", customer);
+            }
+        }
+
+        public async Task DeleteCustomer(Guid Id)
+        {
+            using (IDbConnection conn = new SqlConnection(ConnectionString))
+            {
+                await conn.ExecuteAsync(@"DELETE FROM Customers WHERE Id=@Id", new {Id = Id});
             }
         }
     }

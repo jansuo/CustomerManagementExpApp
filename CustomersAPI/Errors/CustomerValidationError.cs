@@ -2,7 +2,7 @@
 
 namespace CustomersAPI.Errors
 {
-    public struct CustomerValidationError
+    public record CustomerValidationError
     {
         public IReadOnlyList<string> Messages { get; init; }
     }

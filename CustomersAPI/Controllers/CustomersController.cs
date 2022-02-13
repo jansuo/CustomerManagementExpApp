@@ -6,6 +6,7 @@ using CustomersAPI.ControllerServices;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CustomersAPI.Models;
+using System;
 
 namespace CustomersAPI.Controllers
 {
@@ -28,20 +29,29 @@ namespace CustomersAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCustomer([FromBody] CustomerModel customer)
         {
-            var formattedResult = "";
-            var hasError = false;
-            var result = await _customerControllerService.CreateCustomer(customer);
-            result.Switch(guid =>
-            {
-                formattedResult = guid.ToString();
-            }, error =>
-            {
-                hasError = true;
-                formattedResult = string.Join(", ", error.Messages);
-            });
-            if (hasError) return BadRequest(formattedResult);
+            return await CommitUpdateCustomer(customer);
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateCustomer([FromBody]CustomerModel customer)
+        {
+            if (customer.Id == Guid.Empty) return BadRequest(new { error = "Id is empty" });
+            return await CommitUpdateCustomer(customer);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCustomer(Guid Id)
+        {
+            await _customerControllerService.DeleteCustomer(Id);
+            return Ok();
+        }
 
-            return Ok(formattedResult);
+        private async Task<IActionResult> CommitUpdateCustomer(CustomerModel customer)
+        {
+            if (customer == null) return BadRequest(new { error = "Object is null" });
+            var result = await _customerControllerService.UpdateCustomer(customer);
+
+            if (result.ValidationError != null) return BadRequest(result);
+
+            return Ok(result);
         }
     }
 }

@@ -73,5 +73,14 @@ namespace CustomersDAL.Services
                 await conn.ExecuteAsync(@"DELETE FROM Customers WHERE Id=@Id", new {Id = Id});
             }
         }
+
+        public async Task<Customer> GetCustomer(Guid Id)
+        {
+            using (IDbConnection conn = new SqlConnection(ConnectionString))
+            {
+                var customer = await conn.QueryFirstOrDefaultAsync<Customer>("SELECT * FROM Customers WHERE Id=@Id", new { Id = Id });
+                return customer;
+            }
+        }
     }
 }

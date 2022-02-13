@@ -12,5 +12,6 @@ namespace CustomersAPI.ControllerServices
         Task<IReadOnlyList<CustomerModel>> GetCustomers();
         Task<UpdateCustomerResponse> UpdateCustomer(CustomerModel customer);
         Task DeleteCustomer(Guid Id);
+        Task<CustomerModel> GetCustomerById(Guid Id);
     }
 }

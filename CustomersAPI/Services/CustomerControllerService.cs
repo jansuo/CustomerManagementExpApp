@@ -68,5 +68,11 @@ namespace CustomersAPI.ControllerServices
         {
             await _customerService.DeleteCustomer(Id);
         }
+
+        public async Task<CustomerModel> GetCustomerById(Guid Id)
+        {
+            var customer = await _customerService.GetCustomer(Id);
+            return customer.ToModel();
+        }
     }
 }

@@ -7,6 +7,8 @@ namespace CustomersAPI.Mappers
     {
         public static CustomerModel ToModel(this Customer customer)
         {
+            
+            if (customer == null) return null;
             return new()
             {
                 Company = customer.Company,
@@ -19,6 +21,7 @@ namespace CustomersAPI.Mappers
 
         public static Customer ToDto(this CustomerModel model)
         {
+            if (model == null) return null;
             return new()
             {
                 Company = model.Company,

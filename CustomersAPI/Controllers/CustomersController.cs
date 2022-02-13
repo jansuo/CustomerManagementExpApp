@@ -26,6 +26,11 @@ namespace CustomersAPI.Controllers
         {
             return Ok(await _customerControllerService.GetCustomers());
         }
+        [HttpGet]
+        public async Task<IActionResult> GetCustomers(Guid Id)
+        {
+            return Ok(await _customerControllerService.GetCustomerById(Id));
+        }
         [HttpPost]
         public async Task<IActionResult> CreateCustomer([FromBody] CustomerModel customer)
         {

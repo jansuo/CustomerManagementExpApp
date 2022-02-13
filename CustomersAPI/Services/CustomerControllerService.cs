@@ -29,6 +29,7 @@ namespace CustomersAPI.ControllerServices
         public async Task<IReadOnlyList<CustomerModel>> GetCustomers()
         {
             var dbResult = await _customerService.GetAll();
+            if (dbResult == null || dbResult.Count == 0) return null;
             var result = dbResult.Select(x => x.ToModel()).ToList();
             return result;
         }

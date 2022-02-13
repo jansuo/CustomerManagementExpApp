@@ -51,11 +51,13 @@ namespace CustomersAPI.ControllerServices
             var updateResult = new UpdateCustomerResponse();
             if (customer.Id == Guid.Empty)
             {
+                updateResult.responseType = Enums.UpdateCustomerResponseType.Create;
                 var dbResult = await _customerService.CreateCustomer(customer.ToDto());
                 updateResult.Id = dbResult.Id;
             }
             else
             {
+                updateResult.responseType = Enums.UpdateCustomerResponseType.Update;
                 updateResult.Id = customer.Id;
                 await _customerService.UpdateCustomer(customer.ToDto());
             }

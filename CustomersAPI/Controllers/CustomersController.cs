@@ -34,7 +34,7 @@ namespace CustomersAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateCustomer([FromBody]CustomerModel customer)
         {
-            if (customer.Id == Guid.Empty) return BadRequest(new { error = "Id is empty" });
+            if (customer.Id == Guid.Empty) return NotFound(new { error = "Id is empty" });
             return await CommitUpdateCustomer(customer);
         }
         [HttpDelete]
@@ -50,8 +50,13 @@ namespace CustomersAPI.Controllers
             var result = await _customerControllerService.UpdateCustomer(customer);
 
             if (result.ValidationError != null) return BadRequest(result);
-
-            return Ok(result);
+            switch (result.responseType)
+            {
+                case Enums.UpdateCustomerResponseType.Create: 
+                    return Ok(result);
+                default:
+                    return Ok(result);
+            } 
         }
     }
 }

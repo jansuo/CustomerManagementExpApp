@@ -28,5 +28,21 @@ namespace CustomerManagementClient
             InitializeComponent();
             _customerService = customerService;
         }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var customers = await _customerService.GetCustomersAsync();
+                if (customers != null)
+                {
+                    DG.ItemsSource = customers;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            } 
+        }
     }
 }

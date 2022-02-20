@@ -38,13 +38,13 @@ namespace CustomerManagementClient
             IConfigurationRoot configuration,
             IServiceCollection services)
         {
-            services.AddSingleton<ICustomersApi>();
-            services.AddSingleton<ICustomerService, CustomerService>();
             services.AddRefitClient<ICustomersApi>()
                 .ConfigureHttpClient(httpClient =>
                 {
                     httpClient.BaseAddress = new Uri(configuration["CustomersApi:BaseAddress"]);
                 });
+            services.AddSingleton<ICustomerService, CustomerService>();
+            services.AddSingleton<MainWindow>();
         }
 
         private static IConfigurationRoot BuildConfiguration()

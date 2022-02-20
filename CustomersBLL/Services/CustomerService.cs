@@ -20,10 +20,10 @@ namespace CustomersBLL.Services
         public async Task<List<Customer>> GetCustomersAsync()
         {
             var response = await _customersApi.GetCustomersAsync();
-            if (response == null || response.Customers == null) return null;
+            if (response == null) return null;
 
             var result = new List<Customer>();
-            result.AddRange(response.Customers);
+            result.AddRange(response);
             return result;
         }
     }

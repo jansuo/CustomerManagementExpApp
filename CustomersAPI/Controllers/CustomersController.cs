@@ -26,8 +26,9 @@ namespace CustomersAPI.Controllers
         {
             return Ok(await _customerControllerService.GetCustomers());
         }
+        [Route("/{Id}")]
         [HttpGet]
-        public async Task<IActionResult> GetCustomers(Guid Id)
+        public async Task<IActionResult> GetCustomer(Guid Id)
         {
             return Ok(await _customerControllerService.GetCustomerById(Id));
         }
@@ -58,7 +59,7 @@ namespace CustomersAPI.Controllers
             switch (result.responseType)
             {
                 case Enums.UpdateCustomerResponseType.Create: 
-                    return Ok(result);
+                    return Ok(result); // TODO: return create type
                 default:
                     return Ok(result);
             } 

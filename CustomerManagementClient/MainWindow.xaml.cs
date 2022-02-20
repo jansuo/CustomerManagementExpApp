@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CustomersBLL.Services;
 
 namespace CustomerManagementClient
 {
@@ -20,9 +21,12 @@ namespace CustomerManagementClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+
+        private readonly ICustomerService _customerService;
+        public MainWindow(ICustomerService customerService)
         {
             InitializeComponent();
+            _customerService = customerService;
         }
     }
 }
